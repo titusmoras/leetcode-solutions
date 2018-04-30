@@ -1,0 +1,49 @@
+class Solution {
+    public String reverseWords(String s) {
+    StringBuilder reversedWordsStr = new StringBuilder();
+    CustomStack stack = new CustomStack();
+        for(int i=0; i<s.length();i++){
+            if(s.charAt(i)==' '|| (s.length()-1) ==i){
+                if((s.length()-1)==i)
+                    stack.push(s.charAt(i));
+                while(!stack.isStackEmpty()){
+                    reversedWordsStr.append(stack.pop());
+                }
+                if(s.length()-1!=i)
+                reversedWordsStr.append(s.charAt(i));
+            }else{
+                stack.push(s.charAt(i));
+            }
+
+               
+        }
+        return reversedWordsStr.toString();
+    }
+               
+
+}
+
+class CustomStack{
+   private int topOfStack=-1;
+   private char[] stack = new char[10000];
+   
+   int push (char c){
+       topOfStack++;
+       stack[topOfStack] = c;
+       return topOfStack;
+   } 
+    
+   char pop (){
+       
+       return stack[topOfStack--];
+       
+   } 
+    
+   boolean isStackEmpty(){
+       if(topOfStack==-1)
+           return true;
+       return false;
+   } 
+    
+    
+}
