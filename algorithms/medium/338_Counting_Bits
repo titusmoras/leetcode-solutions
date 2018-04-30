@@ -1,0 +1,44 @@
+//Given a non negative integer number num. For every numbers i in the range 0 ≤ i ≤ num
+//calculate the number of 1's in their binary representation and return them as an array.
+
+//Example:
+//For num = 5 you should return [0,1,1,2,1,2].
+
+//Follow up:
+
+//It is very easy to come up with a solution with run time O(n*sizeof(integer)). 
+//But can you do it in linear time O(n) /possibly in a single pass?
+//Space complexity should be O(n).
+//Can you do it like a boss? Do it without using any builtin function 
+//like __builtin_popcount in c++ or in any other language.
+class Solution {
+    public int[] countBits(int num) {
+        
+        int bitsCountArray[] = new int[num+1];
+        int currentPowerOf2=1;
+        int copyMarker = 0;
+        
+        bitsCountArray[0]=0;
+        if(num==0)
+            return bitsCountArray; 
+        bitsCountArray[1]=1;
+        if(num==1)
+            return bitsCountArray;
+        
+        for (int i=2; i <=num; i++ )
+        {//System.out.println((i - Math.pow(2, currentPowerOf2)));
+            if((i - Math.pow(2, currentPowerOf2))==0){
+                //System.out.println("2 power currentPowerof2 = " +Math.pow(2, currentPowerOf2));
+                currentPowerOf2=currentPowerOf2 +1;
+                copyMarker=i;
+                //System.out.print("CopyMarker:" + copyMarker + " currentPowerOf2:" + currentPowerOf2 + "\n");
+            }
+            bitsCountArray[i]=bitsCountArray[i - copyMarker] +1;
+           // System.out.print("Position:" + i + " value:" + bitsCountArray[i] + "\n");
+            
+            
+        }
+        
+        return bitsCountArray;
+    }
+}  
