@@ -1,0 +1,79 @@
+//Given a binary tree, find the leftmost value in the last row of the tree.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int findBottomLeftValue(TreeNode root) {
+// traverse the tree - pass around the least known node pointer, greatest depth and smallest left value
+        HashMap <String,Integer>map = new HashMap<String,Integer>();
+        map.put("deepest",0);
+        map.put("leftmost",0);
+        TreeNode leastNode = findBottomLeftValueHelper(root, root, map,0,0);
+        return leastNode.val;
+    
+    }
+
+TreeNode findBottomLeftValueHelper(TreeNode root, TreeNode least, HashMap<String,Integer> map, int currentLeft, int currentDepth){
+    if(root==null)
+        return least;
+    int deepest = map.get("deepest").intValue();
+    int leftmost = map.get("leftmost").intValue();
+    
+    
+    if(root.left!=null)
+    {
+        if(deepest < currentDepth+1){
+            deepest = currentDepth+1;
+            least = root.left;
+            leftmost=currentLeft-1;
+        
+        }
+        else if(deepest == currentDepth+1){
+            if(currentLeft-1 < leftmost){
+                leftmost = currentLeft-1;
+                least = root.left;
+            }
+                
+        }
+        
+  
+        
+    }
+    if(root.right!=null)
+    {
+        if(deepest < currentDepth+1){
+            deepest = currentDepth+1;
+            least = root.right;
+            leftmost=currentLeft+1;
+        }
+        else if(deepest == currentDepth+1){
+            if(currentLeft+1 < leftmost){
+                leftmost = currentLeft+1;
+                least = root.right;
+            }
+                
+        }
+        
+        
+    }
+        
+    map.put("deepest", new Integer(deepest));
+    
+    map.put("leftmost", new Integer(leftmost));
+    least = findBottomLeftValueHelper(root.left,least,map,currentLeft-1,currentDepth+1); 
+    least = findBottomLeftValueHelper(root.right, least,map,currentLeft+1,currentDepth+1);    
+
+    return least;
+        
+    }
+}
+
+
+    
