@@ -1,0 +1,38 @@
+// Problem:You need to find the largest value in each row of a binary tree.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> largestValues(TreeNode root) {
+     ArrayList<Integer> resultList = new ArrayList<Integer>(); 
+     largestValuesHelper(root, resultList, 0);
+     return resultList;
+    }
+    
+    //Idea - navigate, push to map with row level as key. get, compare. replace if bigger
+    void largestValuesHelper(TreeNode node, ArrayList <Integer>list, int level){
+        if(node==null)
+            return;
+        
+        
+        if(list.size()>level){   // if the map has the value and the value is lesser than current
+            if(list.get(level) < node.val )
+                list.set(level, node.val);
+        } else{
+            list.add(level, node.val);
+            
+        }
+        
+        largestValuesHelper(node.left, list, level + 1);
+        largestValuesHelper(node.right, list, level + 1);
+        
+    }
+
+}
