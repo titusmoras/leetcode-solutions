@@ -1,0 +1,81 @@
+//Two elements of a binary search tree (BST) are swapped by mistake.
+//Recover the tree without changing its structure.
+
+//Follow up:
+//A solution using O(n) space is pretty straight forward.
+//Could you devise a constant space solution?
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+
+    public void recoverTree(TreeNode root) {
+        
+     if (root == null)
+         return;
+    TreeNode leftLargest = findLargestInLeft(root.left, root);
+    TreeNode rightSmallest = findSmallestInRight(root.right, root);    
+     
+        
+        
+    if(root.val <leftLargest.val && root.val > rightSmallest.val)
+        {
+        //Case 1: the leftlargest and rightsmallest are in error - swap them
+        int temp = leftLargest.val;
+        leftLargest.val = rightSmallest.val;
+        rightSmallest.val = temp;
+        }
+    else if(root.val <leftLargest.val && root.val <= rightSmallest.val)
+        {
+        //Case 2: the leftlargest and root are in error - swap them
+        int temp = root.val;
+        root.val = leftLargest.val;
+        leftLargest.val = temp;
+        }
+    else if(root.val >=leftLargest.val && root.val > rightSmallest.val)
+        {
+        //Case 3: the rightLargest  and root are in error - swap them
+        int temp = rightSmallest.val;
+        rightSmallest.val = root.val;
+        root.val = temp;
+        }
+     else{
+         //Case 4: The left and right nodes are in the correct area per root. Go into sub-trees and repeat
+         recoverTree(root.left);
+         recoverTree(root.right);
+     }   
+        
+        
+    }
+    
+    TreeNode findLargestInLeft(TreeNode node, TreeNode largest){
+        if(node==null) 
+            return largest;
+        
+        if(node!=null &&  node.val> largest.val){
+            largest = node;
+        }
+        largest = findLargestInLeft(node.left, largest);
+        largest = findLargestInLeft(node.right, largest);
+        return largest;
+    }
+    
+       TreeNode findSmallestInRight(TreeNode node, TreeNode smallest){
+        if(node==null) 
+            return smallest;
+           
+        if(node!=null && node.val< smallest.val)
+            smallest = node;
+        smallest = findSmallestInRight(node.left, smallest);
+        smallest = findSmallestInRight(node.right, smallest);
+        return smallest;
+    }
+
+}
