@@ -1,0 +1,48 @@
+/**
+ * @param {string} digits
+ * @return {string[]}
+ */
+//Idea - 1.build a map of number to a tree with 3 nodes.
+// Build tree function takes in root, full number, current index in number.
+//If index is beyond the number, then return. else , get a 
+//clone of the tree corresponding to the number, call the function 
+//recursively on all 3 nodes of the tree. Each node contains the built substring.
+//if the number is complete, then insert the value into the common array to be returned.
+
+
+let numberValsObj = {
+    2:["a","b", "c"],
+    3:["d","e", "f"],
+    4:["g","h", "i"],
+    5:["j","k", "l"],
+    6:["m","n", "o"],
+    7:["p","q", "r","s"],
+    8:["t","u", "v"],
+    9:["w","x", "y","z"]   
+}
+
+function buildAndTraverse(finalresult,digits, currentpointer,value)
+{
+     if (digits==="")
+        return;
+    if(currentpointer>=digits.length)
+        {
+            finalresult.push(value);
+            return;
+        }
+
+    let charArr= numberValsObj[digits[currentpointer]]
+    for(let i of charArr){
+        buildAndTraverse(finalresult, digits, currentpointer+1,value.concat(i))
+    }
+}
+
+let letterCombinations = function(digits) {
+    let finalresult = [];
+    let value = "";
+    let currentpointer = 0;
+    buildAndTraverse(finalresult,digits,currentpointer,value);
+    return finalresult;
+};
+
+
