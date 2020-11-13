@@ -1,0 +1,91 @@
+/**
+ * @param {string} a
+ * @param {string} b
+ * @return {boolean}
+ */
+
+function returnCountMatchFromCenter(a){
+    let count =0;
+    let startingIndex = -1;
+    if( a.length % 2 === 1)// odd number of chars
+        
+        {
+
+            for( let i = Math.floor(a.length/2) + 1; i<a.length;i++)
+                {
+                    if(a[i]=== a[a.length-i -1])
+                        count++;
+                    else
+                        break;
+                }
+            return Math.floor(a.length/2)  -count;
+            
+        }
+    else {
+        for( let i = a.length/2;i <a.length; i++ )
+            {
+                if( a[i]===a[a.length-i-1])
+                    count++
+                else
+                    break;
+            }
+        return a.length/2 - count;
+    }
+    
+    
+}
+var checkPalindromeFormation = function(a, b) {
+    if (a.length === 1 || b.length === 1 || a.length === 0 || b.length === 0)
+        return true;
+    let countMatchFromCenterForA = returnCountMatchFromCenter(a);
+    let countMatchFromCenterForB = returnCountMatchFromCenter(b);
+
+    
+
+    
+    
+            match =0;
+            for(let i = 0; i < countMatchFromCenterForA;i++)
+                {
+                    if(a[i]=== b[b.length - i -1])
+                        match++;
+
+                }
+            if(match === countMatchFromCenterForA)
+                return true;
+
+            match = 0;
+            for(let i = 0; i < countMatchFromCenterForA;i++)
+                {
+                    if(a[a.length -i -1]=== b[i])
+                        match++;
+
+                }
+            if(match === countMatchFromCenterForA)
+                return true;
+    
+            match = 0;
+            for(let i = 0; i < countMatchFromCenterForB;i++)
+                {
+                    if(b[i]=== a[a.length - i -1])
+                        match++;
+
+                }
+            if(match === countMatchFromCenterForB)
+                return true;
+    
+            match = 0;
+            for(let i = 0; i < countMatchFromCenterForB;i++)
+                {
+                    if(b[b.length - 1 - i]=== a[i])
+                        match++;
+
+                }
+            if(match === countMatchFromCenterForB)
+                return true;
+            
+
+    return false;
+ 
+};
+
